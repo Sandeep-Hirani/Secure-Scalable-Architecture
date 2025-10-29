@@ -1,0 +1,20 @@
+# service.yaml (reference Service manifest)
+# When deploying via helm/customer this Service is created automatically
+# in the customer namespace; keep this file only for bespoke setups.
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer
+  namespace: customer
+  labels:
+    app.kubernetes.io/name: customer
+    app.kubernetes.io/instance: customer
+spec:
+  selector:
+    app.kubernetes.io/name: customer
+    app.kubernetes.io/instance: customer
+  ports:
+    - name: http
+      port: 6004
+      targetPort: 3000
+  type: ClusterIP

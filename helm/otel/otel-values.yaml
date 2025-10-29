@@ -1,0 +1,43 @@
+# otel-values.yaml
+image:
+  repository: otel/opentelemetry-collector-contrib
+  pullPolicy: IfNotPresent
+
+mode: deployment
+
+ports:
+  otlp:
+    enabled: true      # 4317 gRPC
+  otlp-http:
+    enabled: true      # 4318 HTTP
+
+config:
+  receivers:
+    otlp:
+      protocols:
+        http: {}       # :4318
+        grpc: {}       # :4317
+
+  processors:
+    batch: {}
+
+  exporters:
+    loki:
+      endpoint: http://loki.observability.svc.cluster.local:3100/loki/api/v1/push
+      tls:
+        insecure: true
+
+    # Use 'debug' (not 'logging', which is deprecated) to mirror to stdout
+    debug:
+      verbosity: basic
+
+  service:
+    pipelines:
+      logs:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [loki, debug]
+      traces:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [debug]

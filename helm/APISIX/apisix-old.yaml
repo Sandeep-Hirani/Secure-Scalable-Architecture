@@ -1,0 +1,16 @@
+# Use embedded UI under the Admin API
+dashboard:
+  enabled: true            # enables the built-in Admin UI in newer charts (a.k.a. /ui)
+
+etcd:                      # keep bundled etcd but pin to legacy image that exists on arm64
+  image:
+    repository: bitnamilegacy/etcd
+    tag: 3.6.4-debian-12-r4
+  persistence:
+    enabled: false
+
+service:
+  type: ClusterIP          # default; we'll port-forward below
+
+# (optional) tighten admin.allow later; default key is the well-known sample
+# You can rotate via Helm values/secret after you’re up.

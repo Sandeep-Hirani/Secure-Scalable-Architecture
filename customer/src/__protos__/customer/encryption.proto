@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package cloud.computing.encryption;
+
+service EncryptionService {
+  rpc Encrypt (EncryptDataRequest) returns (EncryptDataResponse);
+  rpc Decrypt (DecryptDataRequest) returns (DecryptDataResponse);
+}
+
+message EncryptDataRequest {
+  string plaintext = 1;
+  map<string, string> context = 2;
+  repeated string key_ids = 3;
+}
+
+message EncryptDataResponse {
+  string ciphertext = 1;
+}
+
+message DecryptDataRequest {
+  string ciphertext = 1;
+  map<string, string> context = 2;
+}
+
+message DecryptDataResponse {
+  string plaintext = 1;
+}

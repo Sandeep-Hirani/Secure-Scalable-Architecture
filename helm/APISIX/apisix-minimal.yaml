@@ -1,0 +1,16 @@
+gateway:
+  type: NodePort
+
+ingress-controller:
+  enabled: false   # you can install this separately if needed
+
+etcd:
+  enabled: true
+  replicaCount: 1
+  persistence:
+    enabled: false   # no PVCs; simpler for Minikube
+  image:
+    registry: docker.io
+    repository: bitnami/etcd
+    tag: 3.5.13-debian-12-r6
+    pullPolicy: Always

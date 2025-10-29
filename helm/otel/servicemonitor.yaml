@@ -1,0 +1,20 @@
+# servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: customer
+  namespace: observability
+  labels:
+    release: kube-prometheus-stack   # <- match your helm release label for the operator
+spec:
+  namespaceSelector:
+    matchNames: ["customer"]
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: customer
+      app.kubernetes.io/instance: customer
+  endpoints:
+    - port: http         # must match Service port name
+      path: /metrics
+      interval: 15s
+      scrapeTimeout: 10s

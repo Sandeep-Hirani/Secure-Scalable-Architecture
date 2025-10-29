@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package cloud.computing.CustomerService;
+// Definition of the Customer service
+service CustomerService {
+  // Get a customer by their ID
+  rpc getCustomer(GetCustomerRequest) returns (CustomerResponse) {}
+
+  // Insert a new customer
+  rpc insertCustomer(InsertCustomerRequest) returns (InsertCustomerResponse) {}
+}
+
+// Definition of the Customer message type
+message Customer {
+  string firstName = 1;
+  string lastName = 2;
+  int32 id = 3;
+  string number = 4;
+  string status = 5;
+}
+
+// Request message for the getCustomer RPC
+message GetCustomerRequest {
+  int32 customerId = 1;
+}
+
+// Response message for the getCustomer RPC
+message CustomerResponse {
+  Customer customer = 1;
+}
+
+// Request message for the insertCustomer RPC
+message InsertCustomerRequest {
+  Customer newCustomer = 1;
+}
+
+// Response message for the insertCustomer RPC
+message InsertCustomerResponse {
+  string message = 1;
+}
