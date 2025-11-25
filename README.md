@@ -53,6 +53,65 @@ Each service also ships with a local README for deeper framework-specific guidan
 
    REST endpoints (e.g. `GET /customers/:id`, `GET /customers/:id/decrypted`, `POST /customers/create`) and GraphQL playground (`http://localhost:3000/graphql`) will be available once the service starts.
 
+## GraphQL Sample Queries
+
+Use the following snippets inside the GraphQL playground to exercise the API quickly.
+
+### Create a customer
+
+```graphql
+mutation CreateCustomer($input: CreateCustomerInput!) {
+  createCustomer(input: $input) {
+    id
+    firstName
+    lastName
+    status
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "input": {
+    "firstName": "Ada",
+    "lastName": "Lovelace",
+    "status": "ACTIVE"
+  }
+}
+```
+
+### Fetch a customer by ID
+
+```graphql
+query CustomerById($id: String!) {
+  customer(id: $id) {
+    id
+    firstName
+    lastName
+    status
+  }
+}
+
+query DecryptedCustomerById($id: String!) {
+  decryptedCustomer(id: $id) {
+    id
+    firstName
+    lastName
+    status
+  }
+}
+```
+
+Variables:
+
+```json
+{
+  "id": "your-customer-id"
+}
+```
+
 ## Demo: Minikube Presentation Flow
 
 The following sequence was used to present the full stack on a local Minikube cluster. Adjust namespaces or chart values as needed.
